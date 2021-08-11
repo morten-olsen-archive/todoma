@@ -1,15 +1,19 @@
-import { Entity, PrimaryColumn, Column, Tree, ManyToMany, JoinTable, TreeChildren, TreeParent } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  Tree,
+  ManyToMany,
+  JoinTable,
+  TreeChildren,
+  TreeParent,
+} from 'typeorm';
 import RemoteTask from './RemoteTask';
 
-type Statuses =
-  'inbox'
-  | 'watching'
-  | 'backlog'
-  | 'next'
-  | 'on-hold'
+type Statuses = 'inbox' | 'watching' | 'backlog' | 'next' | 'on-hold';
 
 @Entity()
-@Tree("closure-table")
+@Tree('closure-table')
 class LocalTask {
   @PrimaryColumn()
   public id!: string;

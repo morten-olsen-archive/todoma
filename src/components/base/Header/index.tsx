@@ -24,28 +24,33 @@ const Header: React.FC<Props> = ({ title, back, actions, right }) => {
   return (
     <View style={{ marginTop: insets.top }}>
       <Row
-        left={!!back && (
-          <Cell onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back-circle" size={26} />
-          </Cell>
-        )}
-        right={(actions || right) && (
-          <>
-            {actions && actions.map((action) => (
-              <Button
-                key={action.title}
-                title={action.title}
-                onPress={action.onPress}
-              />
-            ))}
-            {right}
-          </>
-        )}
+        left={
+          !!back && (
+            <Cell onPress={() => navigation.goBack()}>
+              <Ionicons name="arrow-back-circle" size={26} />
+            </Cell>
+          )
+        }
+        right={
+          (actions || right) && (
+            <>
+              {actions &&
+                actions.map((action) => (
+                  <Button
+                    key={action.title}
+                    title={action.title}
+                    onPress={action.onPress}
+                  />
+                ))}
+              {right}
+            </>
+          )
+        }
       >
         <Jumbo>{title}</Jumbo>
       </Row>
     </View>
   );
-}
+};
 
 export default Header;

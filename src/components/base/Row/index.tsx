@@ -18,7 +18,10 @@ interface Props {
 
 const Children = styled.View``;
 
-const componentOrString = (input: ReactNode, Component: React.FC<{ children: ReactNode }>) => {
+const componentOrString = (
+  input: ReactNode,
+  Component: React.FC<{ children: ReactNode }>
+) => {
   if (!input) {
     return null;
   }
@@ -26,7 +29,7 @@ const componentOrString = (input: ReactNode, Component: React.FC<{ children: Rea
     return <Component>{input}</Component>;
   }
   return input;
-}
+};
 
 const Row: React.FC<Props> = ({
   background,

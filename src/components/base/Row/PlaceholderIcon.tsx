@@ -8,14 +8,18 @@ interface Props {
   onPress?: () => void;
 }
 
-const Icon = styled.View<{ size: number, color: string }>`
+const Icon = styled.View<{ size: number; color: string }>`
   background: ${({ color }) => color};
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   border-radius: ${({ size }) => size / 4}px;
 `;
 
-const PlaceholderIcon: React.FC<Props> = ({ color = 'red', size = 24, onPress }) => (
+const PlaceholderIcon: React.FC<Props> = ({
+  color = 'red',
+  size = 24,
+  onPress,
+}) => (
   <Cell onPress={onPress}>
     <Icon color={color} size={size} />
   </Cell>

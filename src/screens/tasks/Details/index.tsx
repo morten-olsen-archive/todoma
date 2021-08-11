@@ -10,18 +10,27 @@ const TaskDetails: React.FC<{}> = () => {
   // TODO: Fix type
   const task = useTask((route.params as any).id);
 
-  const changeStatus = useCallback(async (status: Statuses) => {
-    if (!task.result) return;
-    await task.service.setStatus(task.result, status);
-  }, [task.service, task.result]);
+  const changeStatus = useCallback(
+    async (status: Statuses) => {
+      if (!task.result) {
+        return;
+      }
+      await task.service.setStatus(task.result, status);
+    },
+    [task.service, task.result]
+  );
 
   const toggleCompleted = useCallback(async () => {
-    if (!task.result) return;
+    if (!task.result) {
+      return;
+    }
     await task.service.toggleCompleted(task.result);
   }, [task.service, task.result]);
 
   const togglePinned = useCallback(async () => {
-    if (!task.result) return;
+    if (!task.result) {
+      return;
+    }
     await task.service.togglePinned(task.result);
   }, [task.service, task.result]);
 
@@ -40,6 +49,6 @@ const TaskDetails: React.FC<{}> = () => {
       />
     </>
   );
-}
+};
 
 export default TaskDetails;

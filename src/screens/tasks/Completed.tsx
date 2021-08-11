@@ -7,21 +7,19 @@ import Page from 'components/Page';
 
 const CompletedScreen: React.FC<{}> = () => {
   const query: Query = useCallback(
-    q => q.where({
-      completionDate: Not(IsNull()),
-    }),
-    [],
+    (q) =>
+      q.where({
+        completionDate: Not(IsNull()),
+      }),
+    []
   );
 
   return (
     <Page>
-      <Header
-        title="Completed"
-        back
-      />
+      <Header title="Completed" back />
       <TaskList query={query} />
     </Page>
-  )
+  );
 };
 
 export default CompletedScreen;

@@ -5,25 +5,28 @@ import useAsync from './useAsync';
 const useTasks = (id: string) => {
   const { taskService } = useContext(ServicesContext);
   const fetch = useCallback(async () => {
-    const result = await taskService.getById(id)
+    const result = await taskService.getById(id);
     return result;
-  }, [id]);
-  const current = useAsync(fetch);
+  }, [id, taskService]);
+  const { update, result, error, state } = useAsync(fetch);
 
   useEffect(() => {
-    const listener = (id?: string) => {
-      if (id === current.result?.id) {
-        current.update();
+    const listener = (taskId?: string) => {
+      if (taskId === result?.id) {
+        update();
       }
     };
     taskService.addListener('taskUpdated', listener);
     return () => {
       taskService.removeListener('taskUpdated', listener);
     };
-  }, [taskService, current.result]);
+  }, [taskService, update, result]);
 
   return {
-    ...current,
+    result,
+    update,
+    state,
+    error,
     service: taskService,
   };
 };

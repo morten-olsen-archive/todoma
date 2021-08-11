@@ -15,8 +15,9 @@ interface ServicesContextValue {
 const ServicesContext = createContext<ServicesContextValue>({} as any);
 
 const ServicesProvider: React.FC = ({ children }) => {
-  const [error, setError] = useState<any>(undefined);
-  const [services, setServices] = useState<ServicesContextValue | undefined>(undefined);
+  const [services, setServices] = useState<ServicesContextValue | undefined>(
+    undefined
+  );
   const setup = useCallback(async () => {
     const providerFactories = new ProviderFactories({
       github: githubProvider,
@@ -34,14 +35,13 @@ const ServicesProvider: React.FC = ({ children }) => {
     setServices({
       taskService,
       providerService,
-    })
+    });
   }, []);
   useEffect(() => {
     setup().catch((err) => {
-      setError(err);
       console.error(err);
     });
-  }, []);
+  }, [setup]);
   if (!services) {
     return <></>;
   }

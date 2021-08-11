@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Scroll = styled.ScrollView`
   flex: 1;
-`
+`;
 const MoreMain: React.FC<{}> = () => {
   const navigation = useNavigation<MoreStackNavigationProps>();
   return (
@@ -19,22 +19,30 @@ const MoreMain: React.FC<{}> = () => {
         <Row
           title="Watching"
           onPress={() => navigation.navigate('Watching')}
-          left={(
-            <Cell><Ionicons name="eye-outline" size={26} /></Cell>
-          )}
-          right={(
-            <Cell><Ionicons name="chevron-forward-outline" size={26} /></Cell>
-          )}
+          left={
+            <Cell>
+              <Ionicons name="eye-outline" size={26} />
+            </Cell>
+          }
+          right={
+            <Cell>
+              <Ionicons name="chevron-forward-outline" size={26} />
+            </Cell>
+          }
         />
         <Row
           title="Completed"
           onPress={() => navigation.navigate('Completed')}
-          left={(
-            <Cell><Ionicons name="checkmark-circle-outline" size={26} /></Cell>
-          )}
-          right={(
-            <Cell><Ionicons name="chevron-forward-outline" size={26} /></Cell>
-          )}
+          left={
+            <Cell>
+              <Ionicons name="checkmark-circle-outline" size={26} />
+            </Cell>
+          }
+          right={
+            <Cell>
+              <Ionicons name="chevron-forward-outline" size={26} />
+            </Cell>
+          }
         />
       </Scroll>
     </Page>

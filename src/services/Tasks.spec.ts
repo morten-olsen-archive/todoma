@@ -4,13 +4,12 @@ import { resetDB } from '../../src/db/create';
 import createDB from '../../src/db/create';
 import TaskService from '../../src/services/Tasks';
 import ProviderService, { ProviderFactories } from './Providers';
-import { Statuses } from '../../src/models/LocalTask';
 
 const demoProvider = async (config: any) => {
   return {
     config,
     getTask: jest.fn(async (id: string) => ({ id } as any)),
-  }
+  };
 };
 
 describe('services/Tasks', () => {
@@ -26,9 +25,12 @@ describe('services/Tasks', () => {
       database: ':memory:',
     });
     Container.set(Connection, connection);
-    Container.set(ProviderFactories, new ProviderFactories({
-      test: demoProvider,
-    }));
+    Container.set(
+      ProviderFactories,
+      new ProviderFactories({
+        test: demoProvider,
+      })
+    );
     service = Container.get(TaskService);
   });
 
@@ -41,7 +43,7 @@ describe('services/Tasks', () => {
   });
 
   it('should start with an empty task list', async () => {
-    const [tasks, count] = await service.find(); 
+    const [tasks, count] = await service.find();
     expect(count).toBe(0);
     expect(tasks).toHaveLength(0);
   });
@@ -49,13 +51,13 @@ describe('services/Tasks', () => {
   it('should be able to insert tasks', async () => {
     await service.create('Foo Bar');
     await service.create('Bar Baz');
-    const [tasks, count] = await service.find(); 
-    expect(tasks.map(t => t.title)).toEqual(['Foo Bar', 'Bar Baz']);
+    const [tasks, count] = await service.find();
+    expect(tasks.map((t) => t.title)).toEqual(['Foo Bar', 'Bar Baz']);
     expect(count).toBe(2);
     expect(tasks).toHaveLength(2);
-    expect(tasks.map(t => t.status)).toEqual([
-      Statuses.Inbox,
-      Statuses.Inbox,
+    expect(tasks.map((t) => t.status)).toEqual([
+      'inbox',
+      'inbox',
     ]);
   });
 
@@ -66,7 +68,7 @@ describe('services/Tasks', () => {
     await service.addRemoteTask(id, 'foo', provider.id);
     await service.addRemoteTask(id, 'baz', provider.id);
     const task = await service.getById(id);
-    expect(task).toBeDefined()
+    expect(task).toBeDefined();
     expect(task.title).toBe('Foo Bar');
     expect(task.description).toBe(null);
     expect(task.remoteTasks).toHaveLength(2);

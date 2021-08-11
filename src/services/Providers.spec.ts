@@ -7,7 +7,7 @@ const demoProvider = async (config: any) => {
   return {
     config,
     getTask: jest.fn(async (id: string) => ({ id } as any)),
-  }
+  };
 };
 
 describe('services/Providers', () => {
@@ -23,9 +23,12 @@ describe('services/Providers', () => {
       database: ':memory:',
     });
     Container.set(Connection, connection);
-    Container.set(ProviderFactories, new ProviderFactories({
-      test: demoProvider,
-    }));
+    Container.set(
+      ProviderFactories,
+      new ProviderFactories({
+        test: demoProvider,
+      })
+    );
     service = Container.get(ProviderService);
   });
 
@@ -40,10 +43,10 @@ describe('services/Providers', () => {
   it('should be able to fetch a remote task', async () => {
     const { id } = await service.add('test', { foo: 'bar' });
     const task = await service.getRemoteTask(id, 'foo');
-    const provider = await service.getProvider(id) as any;
+    const provider = (await service.getProvider(id)) as any;
     expect(provider.getTask).toHaveBeenCalledTimes(1);
     expect(provider.getTask).toHaveBeenCalledWith('foo');
     expect(provider.config).toEqual({ foo: 'bar' });
     expect(task.id).toBe('foo');
-  }); 
+  });
 });

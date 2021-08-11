@@ -17,7 +17,7 @@ const Wrapper = styled.View<{ theme: Theme }>`
   border-radius: ${({ theme }) => theme.sizes.corners}px;
 `;
 
-const Button: React.FC<Props> = ({ title, onPress, type }) => (
+const Button: React.FC<Props> = ({ title, onPress }) => (
   <Touch onPress={onPress}>
     <Wrapper>
       <Link style={{ color: '#fff' }}>{title}</Link>

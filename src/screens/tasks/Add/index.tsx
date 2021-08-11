@@ -21,21 +21,17 @@ const TaskListScreen: React.FC<{}> = () => {
       <Header
         title="Add Task"
         back
-        right={(
+        right={
           <Cell onPress={add}>
             <Ionicons size={26} name="add-circle-outline" />
           </Cell>
-        )}
+        }
       />
       <Row>
-        <Input
-          label="Title"
-          value={title}
-          onChangeText={setTitle}
-        />
+        <Input label="Title" value={title} onChangeText={setTitle} />
       </Row>
     </>
-  )
+  );
 };
 
 export default TaskListScreen;

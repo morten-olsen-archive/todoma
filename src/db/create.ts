@@ -15,10 +15,7 @@ const resetDB = async (connection: Connection) => {
 const createDB = async (options: ConnectionOptions) => {
   const connection = await createConnection({
     ...options,
-    entities: [
-      ...models,
-      ...options.entities || [],
-    ],
+    entities: [...models, ...(options.entities || [])],
   });
   await connection.synchronize();
 

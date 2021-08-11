@@ -10,19 +10,21 @@ interface Props {
   changeStatus?: (status: Statuses) => any;
 }
 
-const ListItemTransition: React.FC<Props> = ({ icon, task, transition, allowedTransitions, changeStatus }) => {
+const ListItemTransition: React.FC<Props> = ({
+  icon,
+  task,
+  transition,
+  allowedTransitions,
+  changeStatus,
+}) => {
   if (
     !changeStatus ||
-    (task.status === transition) ||
+    task.status === transition ||
     (allowedTransitions && !allowedTransitions.includes(transition))
   ) {
     return <></>;
   }
-  return (
-    <Cell onPress={() => changeStatus(transition)}>
-      {icon}
-    </Cell>
-  );
+  return <Cell onPress={() => changeStatus(transition)}>{icon}</Cell>;
 };
 
 export default ListItemTransition;

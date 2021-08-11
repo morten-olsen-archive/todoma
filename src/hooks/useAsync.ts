@@ -15,10 +15,10 @@ const useAsync = <T>(fn: () => Promise<T>) => {
     setError(undefined);
     try {
       setResult(await fn());
-      setState(States.Ready)
+      setState(States.Ready);
     } catch (err) {
-      setError(err)
-      setState(States.Failed)
+      setError(err);
+      setState(States.Failed);
       console.error(err);
     }
   }, [fn]);
@@ -35,6 +35,6 @@ const useAsync = <T>(fn: () => Promise<T>) => {
   };
 };
 
-export { States };
+export type { States };
 
 export default useAsync;

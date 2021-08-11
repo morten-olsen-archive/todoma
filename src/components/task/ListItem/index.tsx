@@ -24,7 +24,7 @@ const ListItem: React.FC<Props> = ({
   return (
     <Row
       onPress={onPress}
-      left={(
+      left={
         <Cell onPress={toggleCompleted}>
           {task.completionDate ? (
             <Ionicons size={26} name="checkmark-circle-outline" />
@@ -32,9 +32,9 @@ const ListItem: React.FC<Props> = ({
             <Ionicons size={26} name="radio-button-off-outline" />
           )}
         </Cell>
-      )}
+      }
       title={task.title}
-      right={(
+      right={
         <>
           <Transition
             task={task}
@@ -73,7 +73,7 @@ const ListItem: React.FC<Props> = ({
             </Cell>
           )}
         </>
-      )}
+      }
     />
   );
 };

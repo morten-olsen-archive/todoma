@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Story, Meta } from '@storybook/react';
-import Row, { PlaceholderIcon} from './';
+import Row, { PlaceholderIcon } from './';
 import Button from 'components/base/Button';
 
 export default {
@@ -29,7 +29,5 @@ Full.args = {
       <PlaceholderIcon color="green" />
     </>
   ),
-  children: (
-    <Button title="Demo button" />
-  ),
+  children: <Button title="Demo button" />,
 };

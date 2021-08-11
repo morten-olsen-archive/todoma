@@ -9,29 +9,38 @@ const useTasks = (query?: Query) => {
   const fetch = useCallback(async () => {
     const [result] = await taskService.find(query);
     return result;
-  }, [query]);
-  const current = useAsync(fetch);
+  }, [query, taskService]);
+  const { result, update, state, error } = useAsync(fetch);
 
-  const toggleCompleted = useCallback(async (task: LocalTask) => {
-    await taskService.toggleCompleted(task);
-  }, [taskService, current.update]);
+  const toggleCompleted = useCallback(
+    async (task: LocalTask) => {
+      await taskService.toggleCompleted(task);
+    },
+    [taskService]
+  );
 
-  const togglePinned = useCallback(async (task: LocalTask) => {
-    await taskService.togglePinned(task);
-  }, [taskService, current.update]);
+  const togglePinned = useCallback(
+    async (task: LocalTask) => {
+      await taskService.togglePinned(task);
+    },
+    [taskService]
+  );
 
   useEffect(() => {
     const listener = () => {
-      current.update();
+      update();
     };
     taskService.addListener('taskUpdated', listener);
     return () => {
       taskService.removeListener('taskUpdated', listener);
     };
-  }, [taskService]);
+  }, [taskService, update]);
 
   return {
-    ...current,
+    result,
+    state,
+    error,
+    update,
     toggleCompleted,
     togglePinned,
     service: taskService,
@@ -39,18 +48,18 @@ const useTasks = (query?: Query) => {
 };
 
 const usePinnedQuery = () => {
-  const pinnedQuery: Query = useCallback(q => q.where({ pinned: true }), []);
+  const pinnedQuery: Query = useCallback((q) => q.where({ pinned: true }), []);
   return pinnedQuery;
-}
+};
 
 const useNextQuery = () => {
   const nextQuery: Query = useCallback(
-    q => q
-      .where({
+    (q) =>
+      q.where({
         completionDate: null,
         status: 'next',
       }),
-    [],
+    []
   );
   return nextQuery;
 };

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import * as typography from 'typography';
 import Row from 'components/base/Row';

@@ -11,12 +11,12 @@ const Page: React.FC = ({ children }) => {
   useEffect(() => {
     const keyboardDidShow = () => setKeyboardShown(true);
     const keyboardDidHide = () => setKeyboardShown(false);
-    Keyboard.addListener("keyboardDidShow", keyboardDidShow);
-    Keyboard.addListener("keyboardDidHide", keyboardDidHide);
+    Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
     return () => {
-      Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
-      Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
+      Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+      Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
     };
   }, []);
   return (

@@ -8,11 +8,12 @@ import Page from 'components/Page';
 
 const BacklogScreen: React.FC<{}> = () => {
   const query: Query = useCallback(
-    q => q.where({
-      completionDate: IsNull(),
-      status: In(['inbox', 'backlog'])
-    }),
-    [],
+    (q) =>
+      q.where({
+        completionDate: IsNull(),
+        status: In(['inbox', 'backlog']),
+      }),
+    []
   );
 
   return (
@@ -21,7 +22,7 @@ const BacklogScreen: React.FC<{}> = () => {
       <AddToInbox />
       <TaskList query={query} />
     </Page>
-  )
+  );
 };
 
 export default BacklogScreen;

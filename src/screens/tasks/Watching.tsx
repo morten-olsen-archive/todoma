@@ -6,17 +6,17 @@ import { IsNull } from 'typeorm';
 import Page from 'components/Page';
 
 const WatchingScreen: React.FC<{}> = () => {
-  const query: Query = useCallback(q => q.where({ status: 'watching', completionDate: IsNull() }), []);
+  const query: Query = useCallback(
+    (q) => q.where({ status: 'watching', completionDate: IsNull() }),
+    []
+  );
 
   return (
     <Page>
-      <Header
-        title="Watching"
-        back
-      />
+      <Header title="Watching" back />
       <TaskList query={query} />
     </Page>
-  )
+  );
 };
 
 export default WatchingScreen;

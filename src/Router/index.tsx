@@ -1,7 +1,16 @@
 import React from 'react';
-import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationProp,
+} from '@react-navigation/bottom-tabs';
 import Today from 'screens/tasks/Today';
 import Backlog from 'screens/tasks/Backlog';
 import Completed from 'screens/tasks/Completed';
@@ -12,7 +21,7 @@ import TaskDetails from 'screens/tasks/Details';
 import { Ionicons } from '@expo/vector-icons';
 
 type TaskStackParamList = {
-  TaskDetails: { id: string};
+  TaskDetails: { id: string };
 };
 
 type TaskStackNavigationProps = StackNavigationProp<TaskStackParamList>;
@@ -29,7 +38,7 @@ type MoreStackParamList = {
   Main: undefined;
   Completed: undefined;
   Watching: undefined;
-}
+};
 
 type MoreStackNavigationProps = StackNavigationProp<MoreStackParamList>;
 
@@ -57,17 +66,21 @@ const MainTab = createBottomTabNavigator<MainTabParamList>();
 const MainTabScreen: React.FC<{}> = () => (
   <MainTab.Navigator screenOptions={{ headerShown: false }}>
     <MainTab.Screen
-      options={{ tabBarIcon: () => <Ionicons name="bookmark-outline" size={26} />}}
+      options={{
+        tabBarIcon: () => <Ionicons name="bookmark-outline" size={26} />,
+      }}
       name="Today"
       component={Today}
     />
     <MainTab.Screen
-      options={{ tabBarIcon: () => <Ionicons name="albums-outline" size={26} />}}
+      options={{
+        tabBarIcon: () => <Ionicons name="albums-outline" size={26} />,
+      }}
       name="Planning"
       component={Backlog}
     />
     <MainTab.Screen
-      options={{ tabBarIcon: () => <Ionicons name="menu" size={26} />}}
+      options={{ tabBarIcon: () => <Ionicons name="menu" size={26} /> }}
       name="More"
       component={MoreStackScreen}
     />
@@ -78,7 +91,7 @@ type RootStackParamList = {
   Main: NavigatorScreenParams<MainTabParamList>;
   AddTask: undefined;
   Task: NavigatorScreenParams<TaskStackParamList>;
-}
+};
 
 type RootStackNavigationProps = StackNavigationProp<RootStackParamList>;
 

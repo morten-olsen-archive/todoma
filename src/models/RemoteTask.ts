@@ -28,7 +28,7 @@ class RemoteTask {
   @ManyToOne(() => RemoteTaskProvider)
   public provider!: RemoteTaskProvider;
 
-  @ManyToMany(() => LocalTask, task => task.remoteTasks)
+  @ManyToMany(() => LocalTask, (task) => task.remoteTasks)
   public localTasks!: LocalTask[];
 }
 

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as Expo from 'expo'
+import * as Expo from 'expo';
 // import * as Sentry from 'sentry-expo';
 import App from './App';
 

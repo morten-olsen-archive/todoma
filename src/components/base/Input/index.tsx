@@ -18,11 +18,7 @@ const InputField = styled.TextInput<{ theme: Theme }>`
 `;
 
 const Input: React.FC<Props> = ({ label, value, onChangeText }) => (
-  <InputField
-    value={value}
-    placeholder={label}
-    onChangeText={onChangeText}
-  />
+  <InputField value={value} placeholder={label} onChangeText={onChangeText} />
 );
 
 export default Input;

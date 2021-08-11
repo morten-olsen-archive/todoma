@@ -10,7 +10,7 @@ class GithubProvider implements Provider {
   #http: AxiosInstance;
 
   constructor({ token }: Config) {
-    const headers: {[name: string]: string} = {};
+    const headers: { [name: string]: string } = {};
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
