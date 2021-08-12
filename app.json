@@ -1,8 +1,10 @@
 {
   "expo": {
-    "name": "todoma",
+    "name": "Todoma",
     "slug": "todoma",
+    "githubUrl": "https://github.com/morten-olsen/todoma",
     "version": "1.0.0",
+    "privacy": "public",
     "orientation": "portrait",
     "entryPoint": "src/index.ts",
     "icon": "./assets/icon.png",
@@ -18,7 +20,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "sh.assemle.todoma"
     },
     "android": {
       "adaptiveIcon": {
