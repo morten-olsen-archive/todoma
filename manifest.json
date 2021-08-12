@@ -2,8 +2,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "tasks",
-  "short_name": "tasks",
+  "name": "todoma",
+  "short_name": "todoma",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
   "icons": [
