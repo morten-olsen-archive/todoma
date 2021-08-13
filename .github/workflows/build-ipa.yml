@@ -1,0 +1,40 @@
+name: Build IPA
+on:
+  workflow_dispatch:
+
+jobs:
+  build_ipa:
+    name: Build IPA
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-packager: yarn
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Packages
+        run: npm i -g yarn && npm i -g turtle-cli && yarn install
+        
+      - name: Fetch certs
+        run: expo fetch:ios:certs
+       
+      - name: Build IPA
+        run: "turtle build:ios --team-id $TEAM_ID --dist-p12-path \"$PWD/todoma_dist.p12\" --provisioning-profile-path \"$PWD/todoma.mobileprovision\""
+        env:
+          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
