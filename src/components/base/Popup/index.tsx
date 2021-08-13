@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
-import { Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
+import Modal from 'components/base/Modal';
 import Row, { Cell } from 'components/base/Row';
 
 interface Props {
@@ -22,6 +22,8 @@ const Wrapper = styled.View`
   shadow-offset: 0 0;
   shadow-opacity: 1;
   shadow-radius: 200px;
+  border-radius: 12px;
+  margin-bottom: -12px;
 `;
 
 const Outer = styled.View`
@@ -31,15 +33,11 @@ const Outer = styled.View`
 const Popup: React.FC<Props> = ({ visible, children, onClose }) => {
   const insets = useSafeAreaInsets();
 
-  if (!visible) {
-    return <></>;
-  }
-
   return (
-    <Modal transparent animationType="slide">
+    <Modal visible={visible} transparent animationType="slide">
       <Outer>
         <Top onPress={onClose} />
-        <Wrapper style={{ paddingBottom: insets.bottom }}>
+        <Wrapper style={{ paddingBottom: insets.bottom + 12 }}>
           <Row
             right={
               <Cell onPress={onClose}>
