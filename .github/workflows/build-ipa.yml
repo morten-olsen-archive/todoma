@@ -1,8 +1,6 @@
 name: Build IPA
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build_ipa:
@@ -45,3 +43,4 @@ jobs:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           EXPO_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
           EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+          EXPO_IOS_DIST_P12_PASSWORD: ${{ secrets.EXPO_IOS_DIST_P12_PASSWORD }}
