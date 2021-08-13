@@ -1,6 +1,8 @@
 name: Build IPA
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build_ipa:
@@ -33,8 +35,13 @@ jobs:
         
       - name: Fetch certs
         run: expo fetch:ios:certs
+      
+      - name: Expo Publish Channel
+        run: expo publish --non-interactive
        
       - name: Build IPA
         run: "turtle build:ios --team-id $TEAM_ID --dist-p12-path \"$PWD/todoma_dist.p12\" --provisioning-profile-path \"$PWD/todoma.mobileprovision\""
         env:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          EXPO_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
+          EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
