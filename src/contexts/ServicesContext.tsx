@@ -6,6 +6,7 @@ import ProviderService, { ProviderFactories } from 'services/Providers';
 import githubProvider from 'providers/Github';
 import dbConfig from 'configs/db';
 import { Connection, getConnection } from 'typeorm';
+import useTutorial from 'hooks/useTutorial';
 
 interface ServicesContextValue {
   taskService: TaskService;
@@ -18,6 +19,7 @@ const ServicesProvider: React.FC = ({ children }) => {
   const [services, setServices] = useState<ServicesContextValue | undefined>(
     undefined
   );
+  const { completes } = useTutorial();
   const setup = useCallback(async () => {
     const providerFactories = new ProviderFactories({
       github: githubProvider,
@@ -36,7 +38,19 @@ const ServicesProvider: React.FC = ({ children }) => {
       taskService,
       providerService,
     });
-  }, []);
+    taskService.addListener('taskUpdated', (_, task) => {
+      completes('add-to-inbox');
+      if (task && task.status === 'backlog') {
+        completes('add-task-to-backlog');
+      }
+      if (task && task.status === 'next') {
+        completes('add-task-to-next');
+      }
+      if (task && task.completionDate) {
+        completes('mark-completed');
+      }
+    });
+  }, [completes]);
   useEffect(() => {
     setup().catch((err) => {
       console.error(err);

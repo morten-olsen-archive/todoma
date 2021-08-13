@@ -16,7 +16,7 @@ import RemoteTask from '../models/RemoteTask';
 import ProviderService from '../services/Providers';
 
 interface Events {
-  taskUpdated: (id?: string) => void;
+  taskUpdated: (id?: string, task?: LocalTask) => void;
 }
 
 type Query = (
@@ -45,15 +45,15 @@ class TaskService
   }
 
   afterUpdate(event: UpdateEvent<LocalTask>) {
-    this.emit('taskUpdated', event.entity?.id);
+    this.emit('taskUpdated', event.entity?.id, event.entity as LocalTask);
   }
 
   afterRemove(event: RemoveEvent<LocalTask>) {
-    this.emit('taskUpdated', event.entity?.id);
+    this.emit('taskUpdated', event.entity?.id, event.entity);
   }
 
   afterInsert(event: InsertEvent<LocalTask>) {
-    this.emit('taskUpdated', event.entity?.id);
+    this.emit('taskUpdated', event.entity?.id, event.entity);
   }
 
   public find = async (query: Query = (a) => a) => {
@@ -76,24 +76,24 @@ class TaskService
   public toggleCompleted = async (task: LocalTask) => {
     task.completionDate = task.completionDate ? null : new Date();
     await this.#localTaskRepo.save(task);
-    this.emit('taskUpdated', task.id);
+    this.emit('taskUpdated', task.id, task);
   };
 
   public togglePinned = async (task: LocalTask) => {
     task.pinned = !task.pinned;
     await this.#localTaskRepo.save(task);
-    this.emit('taskUpdated', task.id);
+    this.emit('taskUpdated', task.id, task);
   };
 
   public setStatus = async (task: LocalTask, status: Statuses) => {
     task.status = status;
     await this.#localTaskRepo.save(task);
-    this.emit('taskUpdated', task.id);
+    this.emit('taskUpdated', task.id, task);
   };
 
   public update = async (task: LocalTask) => {
     await this.#localTaskRepo.save(task);
-    this.emit('taskUpdated', task.id);
+    this.emit('taskUpdated', task.id, task);
   };
 
   public create = async (title: string) => {
@@ -103,7 +103,7 @@ class TaskService
       status: 'inbox',
     });
     await this.#localTaskRepo.save(task);
-    this.emit('taskUpdated', task.id);
+    this.emit('taskUpdated', task.id, task);
     return task;
   };
 
@@ -125,7 +125,7 @@ class TaskService
     await this.#remoteTaskRepo.save(remoteTask);
     current.remoteTasks.push(remoteTask);
     await this.#localTaskRepo.save(current);
-    this.emit('taskUpdated', current.id);
+    this.emit('taskUpdated', current.id, task);
     return current;
   };
 }

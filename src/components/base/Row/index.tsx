@@ -42,7 +42,7 @@ const Row: React.FC<Props> = ({
   children,
   onPress,
 }) => (
-  <Cell background={background} onPress={onPress}>
+  <Cell style={{ borderRadius: 10 }} background={background} onPress={onPress}>
     {left}
     <Cell flex={1} direction="column" align="stretch">
       {!!top}
