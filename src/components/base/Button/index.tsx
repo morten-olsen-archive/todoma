@@ -15,6 +15,7 @@ const Wrapper = styled.View<{ theme: Theme }>`
   background: ${({ theme }) => theme.colors.primary};
   padding: ${({ theme }) => theme.margins.small}px;
   border-radius: ${({ theme }) => theme.sizes.corners}px;
+  align-items: center;
 `;
 
 const Button: React.FC<Props> = ({ title, onPress }) => (

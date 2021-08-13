@@ -55,10 +55,7 @@ describe('services/Tasks', () => {
     expect(tasks.map((t) => t.title)).toEqual(['Foo Bar', 'Bar Baz']);
     expect(count).toBe(2);
     expect(tasks).toHaveLength(2);
-    expect(tasks.map((t) => t.status)).toEqual([
-      'inbox',
-      'inbox',
-    ]);
+    expect(tasks.map((t) => t.status)).toEqual(['inbox', 'inbox']);
   });
 
   it('should be able to attach remote tasks', async () => {

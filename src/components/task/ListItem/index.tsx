@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 import Row, { Cell } from 'components/base/Row';
 import LocalTask, { Statuses } from 'models/LocalTask';
@@ -11,7 +12,12 @@ interface Props {
   toggleCompleted?: () => any;
   togglePinned?: () => any;
   changeStatus?: (status: Statuses) => any;
+  onChangeTitle?: (value: string) => void;
 }
+
+const Title = styled.TextInput`
+  font-weight: bold;
+`;
 
 const ListItem: React.FC<Props> = ({
   task,
@@ -20,7 +26,12 @@ const ListItem: React.FC<Props> = ({
   onPress,
   changeStatus,
   allowedTransitions,
+  onChangeTitle,
 }) => {
+  const [title, setTitle] = useState(task.title);
+  useEffect(() => setTitle(task.title), [task]);
+  console.log('t', title);
+
   return (
     <Row
       onPress={onPress}
@@ -33,16 +44,19 @@ const ListItem: React.FC<Props> = ({
           )}
         </Cell>
       }
-      title={task.title}
+      title={
+        onChangeTitle ? (
+          <Title
+            value={title}
+            onBlur={() => onChangeTitle(title)}
+            onChangeText={setTitle}
+          />
+        ) : (
+          task.title
+        )
+      }
       right={
         <>
-          <Transition
-            task={task}
-            allowedTransitions={allowedTransitions}
-            transition="inbox"
-            icon={<Ionicons name="mail-open-outline" size={26} />}
-            changeStatus={changeStatus}
-          />
           <Transition
             task={task}
             icon={<Ionicons name="eye-outline" size={26} />}

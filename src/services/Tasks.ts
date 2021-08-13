@@ -91,6 +91,11 @@ class TaskService
     this.emit('taskUpdated', task.id);
   };
 
+  public update = async (task: LocalTask) => {
+    await this.#localTaskRepo.save(task);
+    this.emit('taskUpdated', task.id);
+  };
+
   public create = async (title: string) => {
     const task = this.#localTaskRepo.create({
       id: nanoid(),

@@ -34,10 +34,10 @@ class LocalTask {
   public pinned?: boolean;
 
   @Column({ nullable: true })
-  public startDate?: Date;
+  public startDate?: Date | null;
 
   @Column({ nullable: true })
-  public deadline?: Date;
+  public deadline?: Date | null;
 
   @ManyToMany(() => RemoteTask)
   @JoinTable()

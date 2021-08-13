@@ -45,7 +45,9 @@ type MoreStackNavigationProps = StackNavigationProp<MoreStackParamList>;
 const MoreStack = createStackNavigator();
 
 const MoreStackScreen: React.FC<{}> = () => (
-  <MoreStack.Navigator screenOptions={{ animationEnabled: true, headerShown: false }}>
+  <MoreStack.Navigator
+    screenOptions={{ animationEnabled: true, headerShown: false }}
+  >
     <MoreStack.Screen name="Main" component={MoreMain} />
     <MoreStack.Screen name="Watching" component={Watching} />
     <MoreStack.Screen name="Completed" component={Completed} />
@@ -98,7 +100,9 @@ type RootStackNavigationProps = StackNavigationProp<RootStackParamList>;
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const RootStackScreen: React.FC<{}> = () => (
-  <RootStack.Navigator screenOptions={{ animationEnabled: true, headerShown: false }}>
+  <RootStack.Navigator
+    screenOptions={{ animationEnabled: true, headerShown: false }}
+  >
     <RootStack.Group>
       <RootStack.Screen name="Main" component={MainTabScreen} />
     </RootStack.Group>
