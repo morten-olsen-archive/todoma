@@ -30,9 +30,9 @@ const useTasks = (query?: Query) => {
     const listener = () => {
       update();
     };
-    taskService.addListener('taskUpdated', listener);
+    taskService.on('taskUpdated', listener);
     return () => {
-      taskService.removeListener('taskUpdated', listener);
+      taskService.off('taskUpdated', listener);
     };
   }, [taskService, update]);
 

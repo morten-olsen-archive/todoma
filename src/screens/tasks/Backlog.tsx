@@ -18,7 +18,7 @@ const BacklogScreen: React.FC<{}> = () => {
 
   return (
     <Page>
-      <Header title="Planning" />
+      <Header title="Backlog" />
       <AddToInbox />
       <TaskList query={query} />
     </Page>

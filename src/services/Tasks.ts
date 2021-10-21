@@ -6,11 +6,11 @@ import {
   InsertEvent,
   RemoveEvent,
   Repository,
-  SelectQueryBuilder,
   UpdateEvent,
 } from 'typeorm';
 import { nanoid } from 'nanoid';
 import EventEmitter from 'eventemitter3';
+import { ITasks, Query } from './ITasks';
 import LocalTask, { Statuses } from '../models/LocalTask';
 import RemoteTask from '../models/RemoteTask';
 import ProviderService from '../services/Providers';
@@ -19,15 +19,11 @@ interface Events {
   taskUpdated: (id?: string) => void;
 }
 
-type Query = (
-  query: SelectQueryBuilder<LocalTask>
-) => SelectQueryBuilder<LocalTask>;
-
 @Service()
 @EventSubscriber()
 class TaskService
   extends EventEmitter<Events>
-  implements EntitySubscriberInterface<LocalTask>
+  implements EntitySubscriberInterface<LocalTask>, ITasks
 {
   #localTaskRepo: Repository<LocalTask>;
   #remoteTaskRepo: Repository<RemoteTask>;

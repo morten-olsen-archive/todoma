@@ -5,7 +5,8 @@ const useAddTask = () => {
   const { taskService } = useContext(ServicesContext);
   const addTask = useCallback(
     async (title: string) => {
-      await taskService.create(title);
+      const task = await taskService.create(title);
+      return task;
     },
     [taskService]
   );

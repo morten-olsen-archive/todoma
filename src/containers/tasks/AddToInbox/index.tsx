@@ -5,16 +5,24 @@ import { Keyboard } from 'react-native';
 import Row, { Cell } from 'components/base/Row';
 import Input from 'components/base/Input';
 import useAddTask from 'hooks/useAddTask';
+import LocalTask from 'models/LocalTask';
 
-const AddToInbox: React.FC<{}> = () => {
+interface Props {
+  onAdd?: (task: LocalTask) => void;
+}
+
+const AddToInbox: React.FC<Props> = ({ onAdd }) => {
   const theme = useTheme();
   const addTask = useAddTask();
   const [value, setValue] = useState('');
 
   const add = useCallback(async () => {
-    await addTask(value);
+    const task = await addTask(value);
     setValue('');
     Keyboard.dismiss();
+    if (onAdd) {
+      onAdd(task);
+    }
   }, [addTask, value]);
 
   return (
@@ -29,7 +37,7 @@ const AddToInbox: React.FC<{}> = () => {
         </Cell>
       }
     >
-      <Input label="Add task to inbox" value={value} onChangeText={setValue} />
+      <Input label="Add task to backlog" value={value} onChangeText={setValue} />
     </Row>
   );
 };

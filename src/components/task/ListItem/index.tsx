@@ -30,7 +30,6 @@ const ListItem: React.FC<Props> = ({
 }) => {
   const [title, setTitle] = useState(task.title);
   useEffect(() => setTitle(task.title), [task]);
-  console.log('t', title);
 
   return (
     <Row

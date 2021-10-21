@@ -12,6 +12,9 @@ interface Props {
 }
 
 const formatDay = (date: Date) => {
+  if (typeof date === 'string') {
+    date = new Date(date);
+  }
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
@@ -37,15 +40,17 @@ const DateSelector: React.FC<Props> = ({ title, selected, onSelect }) => {
       title={selected ? selected.toString() : 'Not set'}
     >
       <Popup visible={visible} onClose={() => setVisible(false)}>
-        <Calendar
+        {visible && (<Calendar
           showWeekNumbers={true}
           markedDates={marked}
+          hideArrows={false}
+          enableSwipeMonths={true}
           onDayPress={(day: any) => {
             onSelect(new Date(day.timestamp));
             setVisible(false);
           }}
           current={selected}
-        />
+        />)}
         <Row>
           <Button
             title="Clear"

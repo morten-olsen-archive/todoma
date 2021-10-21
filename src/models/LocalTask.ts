@@ -21,6 +21,9 @@ class LocalTask {
   @Column()
   public title!: string;
 
+  @Column({ nullable: true })
+  public emoji?: string;
+
   @Column({ type: String })
   public status!: Statuses;
 
@@ -38,6 +41,12 @@ class LocalTask {
 
   @Column({ nullable: true })
   public deadline?: Date | null;
+
+  @Column({ nullable: true })
+  public importance?: number;
+
+  @Column({ nullable: true })
+  public urgency?: number;
 
   @ManyToMany(() => RemoteTask)
   @JoinTable()

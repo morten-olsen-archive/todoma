@@ -1,8 +1,11 @@
+const { resolve } = require('path');
+const { withUnimodules } = require("@expo/webpack-config/addons");
+
 module.exports = {
   stories: ['../src/**/*.stories.@(ts|tsx|js|jsx|mdx)'],
   addons: ['@storybook/addon-essentials'],
   webpackFinal: (config) => {
-    return {
+    return withUnimodules({
       ...config,
       resolve: {
         ...config.resolve,
@@ -11,6 +14,8 @@ module.exports = {
           'react-native': 'react-native-web',
         },
       },
-    }
+    }, {
+      projectRoot: resolve(__dirname, "../"),
+    });
   },
-}
+};

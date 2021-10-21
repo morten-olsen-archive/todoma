@@ -1,6 +1,7 @@
 import React, { createContext, useState, useCallback, useEffect } from 'react';
 import { Container } from 'typedi';
 import TaskService from 'services/Tasks';
+import { ITasks } from 'services/ITasks';
 import createDB from 'db/create';
 import ProviderService, { ProviderFactories } from 'services/Providers';
 import githubProvider from 'providers/Github';
@@ -8,7 +9,7 @@ import dbConfig from 'configs/db';
 import { Connection, getConnection } from 'typeorm';
 
 interface ServicesContextValue {
-  taskService: TaskService;
+  taskService: ITasks;
   providerService: ProviderService;
 }
 

@@ -56,7 +56,7 @@ const MoreStackScreen: React.FC<{}> = () => (
 
 type MainTabParamList = {
   Today: undefined;
-  Planning: undefined;
+  Backlog: undefined;
   Watching: undefined;
   More: StackNavigationProp<MoreStackParamList>;
 };
@@ -78,7 +78,7 @@ const MainTabScreen: React.FC<{}> = () => (
       options={{
         tabBarIcon: () => <Ionicons name="albums-outline" size={26} />,
       }}
-      name="Planning"
+      name="Backlog"
       component={Backlog}
     />
     <MainTab.Screen
