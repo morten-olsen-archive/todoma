@@ -31,7 +31,7 @@ const TaskListScreen: React.FC<{}> = () => {
   return (
     <Page>
       <Header title="Today" />
-      <AddToInbox onAdd={showAddedMessage} />
+      <AddToInbox title="Add to backlog" onAdd={showAddedMessage} />
       {notifications.map(({ content }) => content)}
       <Scroll>
         <TaskGroup title="Focus" query={pinnedQuery} />

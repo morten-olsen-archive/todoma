@@ -1,8 +1,12 @@
 import React, { ReactNode } from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { Theme } from 'theme';
 
 interface Props {
+  accessibilityRole?: TouchableOpacity['props']['accessibilityRole'];
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
   children?: ReactNode;
   onPress?: () => any;
   background?: string;
@@ -27,10 +31,30 @@ const Wrapper = styled.View<{
 
 const Touch = styled.TouchableOpacity``;
 
-const Cell: React.FC<Props> = ({ children, onPress, ...others }) => {
-  const node = <Wrapper {...others}>{children}</Wrapper>;
+const Cell: React.FC<Props> = ({ children, onPress, ...props}) => {
+  const {
+    accessibilityLabel,
+    accessibilityRole,
+    accessibilityHint,
+    ...others
+  } = props;
+  const node = (
+    <Wrapper {...others}>
+      {children}
+    </Wrapper>
+  );
   if (onPress) {
-    return <Touch onPress={onPress}>{node}</Touch>;
+    return (
+      <Touch
+        accessible
+        accessibilityRole={accessibilityRole || 'button'}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}
+        onPress={onPress}
+      >
+        {node}
+      </Touch>
+    );
   }
   return node;
 };

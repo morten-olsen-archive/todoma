@@ -8,10 +8,11 @@ import useAddTask from 'hooks/useAddTask';
 import LocalTask from 'models/LocalTask';
 
 interface Props {
+  title: string;
   onAdd?: (task: LocalTask) => void;
 }
 
-const AddToInbox: React.FC<Props> = ({ onAdd }) => {
+const AddToInbox: React.FC<Props> = ({ title, onAdd }) => {
   const theme = useTheme();
   const addTask = useAddTask();
   const [value, setValue] = useState('');
@@ -37,7 +38,11 @@ const AddToInbox: React.FC<Props> = ({ onAdd }) => {
         </Cell>
       }
     >
-      <Input label="Add task to backlog" value={value} onChangeText={setValue} />
+      <Input
+        label={title}
+        value={value}
+        onChangeText={setValue}
+      />
     </Row>
   );
 };
