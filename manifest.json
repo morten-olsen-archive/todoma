@@ -10,6 +10,11 @@
     {
       "platform": "itunes",
       "id": "sh.assemle.todoma"
+    },
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=sh.assemle.todoma",
+      "id": "sh.assemle.todoma"
     }
   ],
   "prefer_related_applications": true,
