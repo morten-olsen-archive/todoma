@@ -1,46 +1,59 @@
-name: Build IPA
+name: Expo Publish
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+      - main
 jobs:
-  build_ipa:
-    name: Build IPA
-    runs-on: macos-latest
+  publish-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
+
+      - name: Install and Build 🔧
+        run: |
+          yarn install
+          yarn expo build:web
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: web-build 
+  publish-native:
+    name: Install and publish
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+
+      - uses: actions/setup-node@v2
         with:
-          node-version: 12.x
-      - uses: expo/expo-github-action@v5
+          node-version: 14.x
+
+      - uses: expo/expo-github-action@v6
         with:
-          expo-packager: yarn
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-          expo-cache: true
-      - name: Cache Node Modules
-        uses: actions/cache@v2
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - run: |
+          git config --global user.email "github-action@example.com"
+          git config --global user.name "Github Bot"
+          yarn version --new-version=$BUILD_VERSION
         env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.cache/yarn
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Packages
-        run: npm i -g yarn && npm i -g turtle-cli && yarn install
-        
-      - name: Fetch certs
-        run: expo fetch:ios:certs
-      
-      - name: Expo Publish Channel
-        run: expo publish --non-interactive
-       
-      - name: Build IPA
-        run: turtle build:ios --team-id D2944KU2BE --dist-p12-path ./todoma_dist.p12 --provisioning-profile-path ./todoma.mobileprovision
+          BUILD_VERSION: 1.${{ github.run_id }}.${{ github.run_number }}
+      - run: yarn install
+
+      - run: echo $BUILD_VERSION
+
+      - run: eas build -p android --non-interactive
+
+      - run: eas build -p ios --non-interactive
         env:
-          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          EXPO_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
-          EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
-          EXPO_IOS_DIST_P12_PASSWORD: ${{ secrets.EXPO_IOS_DIST_P12_PASSWORD }}
+          EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }}
+
+      - run: eas submit --platform ios --non-interactive --latest
+        env:
+          EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.EXPO_APPLE_APP_SPECIFIC_PASSWORD }}
